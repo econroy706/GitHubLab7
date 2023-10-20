@@ -1,0 +1,62 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 def force(t,pos,v, b):\
+    x2 = -k*(pos-xC) + -b * v\
+    return (x2)\
+x0 = 1 ##m\
+xC = 0 \
+v0 = 0 ##m/s\
+m = .1 ##kg\
+k = 10 ##N/m\
+g = 9.8\
+D = 100 ## m\
+beta = 1.6 * 10**-4 ##Ns/m2\
+b = D * beta\
+\
+x0 = 1 ##m\
+v = 100\
+v0 = 0 ##m/s\
+m = .1 ##kg\
+k = 10 ##N/m\
+g = 9.8\
+\
+nsteps = 1000\
+import numpy as np\
+from scipy.integrate import odeint\
+import matplotlib.pyplot as plt\
+\
+t,dt=np.linspace(0,30,nsteps,retstep=True)\
+\
+\
+print (dt)\
+\
+data = np.zeros((nsteps, 2))\
+vel = v0\
+pos = x0\
+\
+for i, ti in enumerate(t):\
+      acc=force(t,pos,vel, b)/m\
+      vel=vel+acc*dt\
+      pos=pos+vel*dt\
+      if(i==0): #reset on first round so i=0 gets x0,v0\
+            vel=v0\
+            pos=x0\
+      data[i]=t[i], pos #fill the data array with our data\
+print (data)\
+\
+\
+plt.plot(data[:,0], data[:,1], label = "calc soln")\
+omega = -(k/m)**.5\
+time = t\
+xt = x0*np.cos(omega*t)\
+##plt.plot(t, xt, label = "Analytical Sol'n")\
+plt.legend ()\
+plt.xlabel ("Time")\
+plt.ylabel ("Amplitude")\
+plt.title ("Lab 6 GHO damping effect")\
+}
